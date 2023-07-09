@@ -1,0 +1,31 @@
+NPM installs 
+
+npm i react-router-dom
+npm i localforage
+npm i match-sorter
+npm i sort-by
+npm i react-icons
+npm i styled-components
+npm i @mui/material
+npm i firebase
+npm i @emotion/react @emotion/styled
+npm i @splidejs/react-splide
+npm i react-confirm-alert
+
+LINKS: 
+
+https://www.npmjs.com
+
+
+TO RUN:
+
+npm run dev
+
+
+TODO:
+
+1. populate edit form correctly
+2. toggle favorites
+3. add tags - top bar catagories
+4. implement search
+5. type script conversion

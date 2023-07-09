@@ -1,0 +1,46 @@
+.recipe-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 4rem;
+    margin-left: 12rem;
+    margin-right: 12rem;
+    padding: 2rem;
+    background: linear-gradient(#132A13 0%, #132A13 18%, white 18%, white 100%);
+    background-color: #132A13;
+    box-shadow: 1px 1px 50px grey;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  input {
+    font-size: 1.5rem;
+    padding: 10px;
+    border: 2px solid #eee;
+  }
+
+  textarea {
+    font-size: 1.5rem;
+    padding: 10px;
+    font-family: "Consolas", sans-serif;
+    border-radius: .5rem;
+  }
+
+  select {
+    font-size: 1.5rem;
+    padding: 10px;
+    border-radius: .5rem;
+  }
