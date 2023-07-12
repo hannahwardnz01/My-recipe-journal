@@ -10,34 +10,33 @@ import "../css/edit.css"
 import {Edit} from "../firebase_setup/Edit"
 
 export async function action({ request, params }) {
-  console.log("here")
-    //const formData = await request.formData();
-    //console.log(formData)
-    Edit({params})
-    console.log("update done?")
-    return redirect("/homepage")
+    let formData = await request.formData();
+    console.log(formData.get("favorite"))
+    console.log(formData.get("rating"))
+    console.log(formData)
+    // Edit({params: {params.recipeID, formData}})
+    // console.log("update done?")
+    // return redirect("/homepage")
 }
 
 export default function EditRecipe() {
   const { recipe, id } = useLoaderData();
 
-  const [ingredient, setIngredient] = useState('');
-  const [ingredientList, setIngredientList] = useState([]);
+  const [ingredient, setIngredient] = useState();
 
   const [method, setMethod] = useState('');
-  const [methodList, setMethodList] = useState([]);
 
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    difficulty: '',
-    time: '',
-    servings: '',
-    imageURL: '',
-    favourite: false,
-    ingredients: [],
-    method: [],
-    rating: ''
+    title: recipe.title,
+    description: recipe.description,
+    difficulty: recipe.difficulty,
+    time: recipe.time,
+    servings: recipe.servings,
+    imageURL: recipe.imageURL,
+    favourite: recipe.favourite,
+    ingredients: recipe.ingredients,
+    method: recipe.method,
+    rating: recipe.rating
   });
 
   const handleIngredientInputChange = (e) => {
@@ -51,45 +50,37 @@ export default function EditRecipe() {
 
   const handleAddIngredient = (e) => {
     e.preventDefault();
-    if (ingredient.trim() !== '') {
-      setIngredientList([...ingredientList, ingredient]);
-      setIngredient('');
-    }
     setFormData((prevState) => ({
       ...prevState,
-      ingredients: ingredientList
+      ingredients: [...formData.ingredients, ingredient]
     }));
+    setIngredient('');
   };
 
   const handleRemoveIngredient = (index) => {
     const updatedList = [...ingredientList];
     updatedList.splice(index, 1);
-    setIngredientList(updatedList);
     setFormData((prevState) => ({
       ...prevState,
-      ingredients: ingredientList
+      ingredients: updatedList
     }));
   };
 
   const handleAddMethod= (e) => {
     e.preventDefault();
-    if (method.trim() !== '') {
-      setMethodList([...methodList, method]);
-      setMethod('');
-    }
     setFormData((prevState) => ({
       ...prevState,
-      method: methodList
+      method: [...formData.method, method]
     }));
+    setMethod('');
   };
 
   const handleRemoveMethod = (index) => {
-    const updatedList = [...methodList];
+    const updatedList = [...formData.method];
     updatedList.splice(index, 1);
-    setMethodList(updatedList);
     setFormData((prevState) => ({
       ...prevState,
-      method: methodList
+      method: updatedList
     }));
   };
 
@@ -105,68 +96,32 @@ export default function EditRecipe() {
     <div className="recipe-form-container">
       <h1 style={{color: COLORS.TeaGreen, lineHeight: 0.3}}>Create a new recipe...</h1>
       <p style={{color: COLORS.TeaGreen}}>Fill out the form below to create a new recipe for your journal.</p>
-      <form method="post">
-          <input type="text" name="title" placeholder="Title" onChange={handleChange} />
-        <label>
-          <input type="text" name="description" placeholder="Description" value={recipe.description} onChange={handleChange} />
-        </label>
-          <input type="text" name="difficulty" value={recipe.difficulty} placeholder="Difficulty" onChange={handleChange} />
-          <input type="text" name="time" value={recipe.time} placeholder="Time" onChange={handleChange} />
-          <input type="number" name="servings" value={recipe.servings} placeholder="Servings" onChange={handleChange} />
-          <input type="text" name="imageURL" value={recipe.imageURL} placeholder="Image URL" onChange={handleChange} />
+      <Form method="post">
+          <input type="text"name="title" placeholder="Title" value={formData.title} onChange={handleChange} />
+          <input type="text" name="description" placeholder="Description" value={formData.description} onChange={handleChange} />
+          <input type="text" name="difficulty" value={formData.difficulty} placeholder="Difficulty" onChange={handleChange} />
+          <input type="text" name="time" value={formData.time} placeholder="Time" onChange={handleChange} />
+          <input type="number" name="servings" value={formData.servings} placeholder="Servings" onChange={handleChange} />
+          <input type="text" name="imageURL" value={formData.imageURL} placeholder="Image URL" onChange={handleChange} />
           <FormControlLabel
+            name="favorite"
             label="Favorite"
             control={<Switch />}
-            checked={recipe.favourite}
+            checked={formData.favourite}
             onChange={() => setFormData(prevState => ({ ...prevState, favourite: !prevState.favourite }))}
             style={{display:"flex", flexDirection:"row-reverse", justifyContent:"start", paddingLeft: "10px"}}
           />
-          <input type="number" name="rating" value={recipe.rating} placeholder="Rating 1-5" onChange={handleChange} />
-        <div>
-        <input
-          type="text"
-          value={ingredient}
-          onChange={handleIngredientInputChange}
-          placeholder="Enter ingredient"
-        />
-        <Button onClick={handleAddIngredient}>Add Ingredient</Button>
-        {ingredientList.length > 0 && <IngredientsWrapper>
-          <ul>
-            {ingredientList.map((ingredient, index) => (
-              <li>
-                  {ingredient}
-                  <Button onClick={() => handleRemoveIngredient(index)}>X</Button>
-              </li>
-            ))}
-          </ul>
-        </IngredientsWrapper>}
-        </div>
-        <div>
-        <input
-          type="text"
-          value={method}
-          onChange={handleMethodInputChange}
-          placeholder="Enter steps"
-        />
-        <Button onClick={handleAddMethod}>Add step</Button>
-        {methodList.length > 0 && <IngredientsWrapper>
-          <ul>
-            {methodList.map((step, index) => (
-              <li>
-                  {step}
-                  <Button onClick={() => handleRemoveMethod(index)}>X</Button>
-              </li>
-            ))}
-          </ul>
-        </IngredientsWrapper>}
-        </div>
-      </form>
-      <Form method="post">
-            <button type="submit">Submit</button>
+          <input type="number" name="rating" value={formData.rating} placeholder="Rating 1-5" onChange={handleChange} />
+          <br />
+            <br />
+            <button>Submit</button>
       </Form>
     </div>
   );
 }
+
+//notes: console.log(formData.get("favorite")) returns on/null. 
+//all the form parts work so far but need to try the method and ingredietns part. 
 
 const IngredientsWrapper = styled.div`
     display: flex;

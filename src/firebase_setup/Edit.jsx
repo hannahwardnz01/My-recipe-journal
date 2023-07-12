@@ -10,33 +10,17 @@ import { firestore } from "./firebase";
 
 export async function Edit ({ params }){
 
-    console.log("here2")
-
     console.log(params.recipeID)
-
+    console.log(params.testData)
 
     const docRef = doc(firestore, "test-data", params.recipeID)
 
-
     let docSnap;
 
-    let testData = {
-        title: 'sucess',
-        description: '',
-        difficulty: '',
-        time: '',
-        servings: '',
-        imageURL: '',
-        favourite: false,
-        ingredients: [],
-        method: [],
-        rating: ''}
-
     try {
-        docSnap = await updateDoc(docRef, {testData : {...testData}})
+        docSnap = await updateDoc(docRef, {testData : {...params.testData}})
     } catch(err) {  
         console.log(err)
     }
-    console.log(docSnap)
     return docSnap
 }

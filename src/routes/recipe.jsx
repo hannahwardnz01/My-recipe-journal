@@ -3,6 +3,10 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai"
 import { COLORS } from "../Colors"
 import { useLoaderData, Form, Link } from "react-router-dom";
 import ExploreCard from "../components/ExploreStrip";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from '@mui/material/Switch';
+import {Edit} from "../firebase_setup/Edit"
+import { useState } from "react";
 
 export function getRating(recipe){
     if(recipe.rating === "1"){
@@ -25,6 +29,13 @@ export function getRating(recipe){
 
 function Recipe(){
     const { recipe, id, recipes } = useLoaderData();
+    const [checked, setChecked] = useState(recipe.favourite);
+
+    const handleChange = (event) => {
+    setChecked(event.target.checked);
+    Edit({params: {recipeID: id, testData: {...recipe, favourite: !recipe.favourite}}})
+    };
+
 
     console.log(recipe)
 
@@ -79,6 +90,13 @@ function Recipe(){
                         Edit
                     </button>
                 </Link>
+                <FormControlLabel
+                    label="Favorite"
+                    control={<Switch />}
+                    checked={checked}
+                    onChange={handleChange}
+                    style={{display:"flex", flexDirection:"row-reverse", justifyContent:"start", paddingLeft: "10px"}}
+                />
             </Card>
             <ExploreCard props={recipes}/>
         </div>
