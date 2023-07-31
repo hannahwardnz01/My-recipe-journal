@@ -2,16 +2,19 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Link } from "react-router-dom";
+import { CgTag } from "react-icons/cg";
 
-function AllGrid(props) {  
 
-  console.log(props)
+function TagGrid(props) {  
+
+const recipes = props.props.recipes
+const tagName = props.props.tagName
 
   function getGridRecipe(recipe) {
     const recipeData = recipe.data;
     const id = recipe.id;
     return (
-      <Grid item xs={12} sm={6} md={3} key={recipe.uniqueId}>
+      <Grid item xs={12} sm={6} md={3}>
         <Link to={`/recipes/${id}`}>
         <Card>
           <p>{recipeData.title}</p>
@@ -26,11 +29,12 @@ function AllGrid(props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Wrapper>
-        <h1 style={{fontWeight: "lighter"}}>All recipes</h1>
+        <h1 style={{fontWeight: "lighter"}}><CgTag/>{tagName}</h1>
         <Grid container spacing={{ xs: 2, md: 4 }}>
-          {props.props.map((recipe) => {
-            if(recipe.data == undefined){return}
-            return getGridRecipe(recipe);
+          {recipes.map((recipe) => {
+            if(recipe.data == undefined || recipe.data.tags == undefined){return}
+            if(recipe.data.tags.includes(tagName)){
+                return getGridRecipe(recipe)};
           })}
         </Grid>
       </Wrapper>
@@ -82,4 +86,4 @@ const Gradient = styled.div`
   height: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
 `;
-export default AllGrid;
+export default TagGrid;

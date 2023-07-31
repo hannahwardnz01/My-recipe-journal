@@ -3,9 +3,7 @@ import * as ReactDOM from "react-dom/client";
 import ErrorPage from "./error-page";
 import Root, { loader as rootLoader, action as rootAction,
 } from "./routes/root";
-import EditRecipe, {
-  action as editAction,
-} from "./routes/edit";
+import EditRecipe from "./routes/edit";
 import { action as destroyAction } from "./routes/destroy";
 
 import {
@@ -14,7 +12,7 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import Homepage from "./routes/homepage";
-import Lunches from "./routes/lunches"
+import Lunch from "./routes/lunch"
 import Vegetarian from "./routes/vegetarian";
 import Recipe from "./routes/recipe"; 
 import {recipeLoader, recipesLoader, multiLoader} from "./firebase_setup/read"
@@ -31,7 +29,7 @@ const router = createBrowserRouter([
       {
         errorElement: <ErrorPage />,
         children: [
-          { index: true, element: <Homepage /> },
+          { index: true, element: <Homepage />, loader: recipesLoader,},
           {
             path: "homepage",
             element: <Homepage />,
@@ -43,8 +41,8 @@ const router = createBrowserRouter([
             loader: recipesLoader,
           },
           {
-            path: "lunches",
-            element: <Lunches />,
+            path: "lunch",
+            element: <Lunch />,
             loader: recipesLoader,
           },     
           {
@@ -56,7 +54,7 @@ const router = createBrowserRouter([
             path: "recipes/:recipeID/edit",
             element: <EditRecipe />,
             loader: recipeLoader,
-            action: editAction,
+            //action: editAction,
           },
           {
             path: "recipes/:recipeID/destroy",

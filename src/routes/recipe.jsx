@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai"
+import { CgTag } from "react-icons/cg";
 import { COLORS } from "../Colors"
 import { useLoaderData, Form, Link } from "react-router-dom";
 import ExploreCard from "../components/ExploreStrip";
@@ -31,17 +32,17 @@ function Recipe(){
     const { recipe, id, recipes } = useLoaderData();
     const [checked, setChecked] = useState(recipe.favourite);
 
+    const tagNames = recipe.tags
+    console.log(tagNames)
+
     const handleChange = (event) => {
     setChecked(event.target.checked);
     Edit({params: {recipeID: id, testData: {...recipe, favourite: !recipe.favourite}}})
     };
 
-
-    console.log(recipe)
-
     if(recipe == undefined){return}
     return(
-        <div style={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+        <div style={{display: "flex", flexDirection: "row", alignItems: "top", justifyContent: "center"}}>
             <Card className="recipeCard">
                 <img src={recipe.imageURL} alt={recipe.title} />
                 <TitleWrapper>
@@ -70,6 +71,14 @@ function Recipe(){
                         return <li>{item}</li>
                     })}
                 </ol>
+                {recipe.tags.length >0 && 
+                <div style={{display: "flex", flexDirection: "row"}}>
+                        {recipe.tags.length > 0 && recipe.tags.map((tag) => {
+                            return <div style={{paddingRight: "20px"}}><Link to={`/${tag}`}><CgTag/>{tag}</Link></div>
+                        })}
+                    
+                </div>}
+                <br />
                 <Form
                     method="post"
                     action="destroy"
@@ -98,7 +107,7 @@ function Recipe(){
                     style={{display:"flex", flexDirection:"row-reverse", justifyContent:"start", paddingLeft: "10px"}}
                 />
             </Card>
-            <ExploreCard props={recipes}/>
+            <ExploreCard props={{recipes: recipes, tagNames: tagNames, id: id}}/>
         </div>
     )
 }

@@ -11,6 +11,8 @@ import { getContacts, createContact } from "../contacts";
 import { useEffect } from "react";
 import { GiHotMeal } from "react-icons/gi";
 import Create from "../firebase_setup/create";
+import { CgTag } from "react-icons/cg";
+
 
 /**
  * 
@@ -19,7 +21,6 @@ import Create from "../firebase_setup/create";
 
 
 export async function action() {
-  console.log("here")
   const recipe = await Create({});
   return redirect(`/recipes/${recipe.id}/edit`);
 }
@@ -50,8 +51,8 @@ export default function Root() {
             </div>
           </NavLink>
         <div>
-          <NavLink to={`lunches`}>
-            Lunches
+          <NavLink to={`lunch`}>
+          <CgTag/>Lunch
           </NavLink>
         </div>
         <div>

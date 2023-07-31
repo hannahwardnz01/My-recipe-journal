@@ -10,9 +10,6 @@ import { firestore } from "./firebase";
 
 export async function Edit ({ params }){
 
-    console.log(params.recipeID)
-    console.log(params.testData)
-
     const docRef = doc(firestore, "test-data", params.recipeID)
 
     let docSnap;

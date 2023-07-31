@@ -18,9 +18,10 @@ function Create () {
         servings: '',
         imageURL: '',
         favourite: false,
-        ingredients: [],
-        method: [],
-        rating: ''
+        ingredients: [""],
+        method: [""],
+        rating: '',
+        tags: [""]
     }}
     try {
      doc = addDoc(ref, data)

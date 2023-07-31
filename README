@@ -24,67 +24,6 @@ npm run dev
 
 TODO:
 
-1. populate edit form correctly
 3. add tags - top bar catagories
 4. implement search
 5. type script conversion
-
-<div className="recipe-form-container">
-      <h1 style={{color: COLORS.TeaGreen, lineHeight: 0.3}}>Create a new recipe...</h1>
-      <p style={{color: COLORS.TeaGreen}}>Fill out the form below to create a new recipe for your journal.</p>
-<Form method="post">
-          <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} />
-        <label>
-          <input type="text" name="description" placeholder="Description" value={formData.description} onChange={handleChange} />
-        </label>
-          <input type="text" name="difficulty" value={formData.difficulty} placeholder="Difficulty" onChange={handleChange} />
-          <input type="text" name="time" value={formData.time} placeholder="Time" onChange={handleChange} />
-          <input type="number" name="servings" value={formData.servings} placeholder="Servings" onChange={handleChange} />
-          <input type="text" name="imageURL" value={formData.imageURL} placeholder="Image URL" onChange={handleChange} />
-          <FormControlLabel
-            label="Favorite"
-            control={<Switch />}
-            checked={formData.favourite}
-            onChange={() => setFormData(prevState => ({ ...prevState, favourite: !prevState.favourite }))}
-            style={{display:"flex", flexDirection:"row-reverse", justifyContent:"start", paddingLeft: "10px"}}
-          />
-          <input type="number" name="rating" value={formData.rating} placeholder="Rating 1-5" onChange={handleChange} />
-        <div>
-        <input
-          type="text"
-          onChange={handleIngredientInputChange}
-          placeholder="Enter ingredient"
-        />
-        <Button onClick={handleAddIngredient}>Add Ingredient</Button>
-        {formData.ingredients.length > 0 && <IngredientsWrapper>
-          <ul>
-            {formData.ingredients.map((ingredient, index) => (
-              <li>
-                  {ingredient}
-                  <Button onClick={() => handleRemoveIngredient(index)}>X</Button>
-              </li>
-            ))}
-          </ul>
-        </IngredientsWrapper>}
-        </div>
-        <div>
-        <input
-          type="text"
-          value={method}
-          onChange={handleMethodInputChange}
-          placeholder="Enter steps"
-        />
-        <Button onClick={handleAddMethod}>Add step</Button>
-        {formData.method.length > 0 && <IngredientsWrapper>
-          <ul>
-            {formData.method.map((step, index) => (
-              <li>
-                  {step}
-                  <Button onClick={() => handleRemoveMethod(index)}>X</Button>
-              </li>
-            ))}
-          </ul>
-        </IngredientsWrapper>}
-        </div>
-        <button type="submit">Save</button>
-      </Form>

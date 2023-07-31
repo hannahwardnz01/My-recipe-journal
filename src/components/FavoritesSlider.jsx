@@ -26,7 +26,7 @@ function FavouritesSlider(props) {
               const id = recipe.id;
               if(recipeData.favourite){
               return (
-                <SplideSlide>
+                <SplideSlide key={recipe.uniqueId}>
                   <Link to={`/recipes/${id}`}>
                     <Card>
                         <p>{recipeData.title}</p>

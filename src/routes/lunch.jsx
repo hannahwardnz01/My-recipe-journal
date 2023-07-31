@@ -1,11 +1,11 @@
 import TagGrid from "../components/TagGrid"
 import { useLoaderData } from "react-router-dom";
 
-export default function Vegetarian() {
+export default function Lunch() {
   const recipes = useLoaderData(); 
   return (
     <>
-      <TagGrid props={{recipes: recipes, tagName: "vegetarian"}}/>
+      <TagGrid props={{recipes: recipes, tagName: "lunch"}}/>
     </>
   );
 }

@@ -5,6 +5,10 @@ import { getRating } from "../routes/recipe";
 
 function ExploreCard(props) {
 
+  const recipes = props.props.recipes
+  const tagNames = props.props.tagNames
+  const id = props.props.id
+
   function getRecipeItem(recipe){
     return( 
       <Link to={`../recipes/${recipe.id}`}> 
@@ -24,9 +28,14 @@ function ExploreCard(props) {
     return (
         <Wrapper>
           <h2>You might also like...</h2>
-          {props.props.map((recipe) => {
-            if(recipe.data==undefined){return}
-             if(recipe.data.favourite){
+          {recipes.map((recipe) => {
+            if(recipe.data == undefined || recipe.data.tags == undefined || tagNames == undefined){return}
+            const contains = recipe.data.tags.some(element => {
+              console.log(element)
+              console.log(tagNames)
+              return tagNames.includes(element);
+            });
+            if(contains && recipe.id!=id){
                 return getRecipeItem(recipe);}
             })}
         </Wrapper>
@@ -36,7 +45,7 @@ function ExploreCard(props) {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: top;
   background: ${COLORS.UraniunBlue};
   margin-left: 200px;
   margin-top: 20px;
